@@ -1,1 +1,1 @@
-Ansible playbboks for my VMs at digital ocean.
+Ansible playbooks for my VMs at digital ocean.
