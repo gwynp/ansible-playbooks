@@ -1,0 +1,6 @@
+---
+# file: webservers.yml
+- hosts: web
+  roles:
+    - common
+    - nginx

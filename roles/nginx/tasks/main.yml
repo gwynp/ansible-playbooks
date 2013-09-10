@@ -1,0 +1,31 @@
+---
+
+- name: be sure nginx is installed
+  apt: pkg=nginx state=installed
+  tags: nginx
+
+- name: write nginx.conf
+  action: template src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  notify:
+    - restart nginx
+  tags: nginx
+
+- name: copy over domain template files
+  copy: src=$item dest=/etc/nginx/sites-available/$item owner=root group=root mode=644 backup=yes
+  with_items: $nginx_domains
+  tags: nginx
+
+- name: make links in sites-enabled
+  file: src=/etc/nginx/sites-available/$item dest=/etc/nginx/sites-enabled/$item owner=root group=root state=link
+  with_items: $nginx_domains
+  notify:
+    - restart nginx
+  tags: nginx
+
+- name: be sure nginx is running and enabled
+  service: name=nginx state=running enabled=yes
+  tags: nginx
+
+- name: make sure the log directory is there
+  file: path=/var/log/nginx owner=www-data group=www-data mode=0755 state=directory
+  tags: nginx
