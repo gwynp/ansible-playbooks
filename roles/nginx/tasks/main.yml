@@ -29,3 +29,10 @@
 - name: make sure the log directory is there
   file: path=/var/log/nginx owner=www-data group=www-data mode=0755 state=directory
   tags: nginx
+
+- name: make sure the content directories exist
+  file: path=/opt/www/$item owner=gwyn group=gwyn mode=0755 state=directory
+  with_items: $nginx_domains
+  tags: nginx
+
+#- include: git.yml

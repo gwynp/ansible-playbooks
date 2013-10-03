@@ -3,7 +3,7 @@ server {
 	listen 80;
 
 
-	root /opt/www/sportdocs/octopress/public;
+	root /opt/www/www.sportdocs.org/public;
         index index.html index.php;
 
 	# Make site accessible from http://localhost/

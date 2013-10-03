@@ -1,6 +1,12 @@
 ---
 # file: webservers.yml
 - hosts: web
+  sudo: yes
   roles:
     - common
     - nginx
+
+- hosts: web
+  user: gwyn
+  roles:
+    - git

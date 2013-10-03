@@ -1,0 +1,7 @@
+---
+- hosts: web
+  user: gwyn
+  tasks:
+  - name: check blog contents out of github
+    git: repo=ssh://git@github.com/gwynp/www.sportdocs.org.git dest=/opt/www
+    tags: nginx

@@ -14,3 +14,6 @@ nginx_domains:
 nginx_user: www-data
 
 nginx_processes: 4
+
+nginx_directories: 
+  - /opt/www/sportdocs/octopress
