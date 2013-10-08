@@ -21,3 +21,16 @@
 - name: change sudoers.d line in /etc/sudoers
   lineinfile: dest=/etc/sudoers regexp=/etc/sudoers.d$ line='#includedir /etc/sudoers.d'
   tags: sudoers
+
+- name: install sysstat
+  apt: pkg=sysstat state=installed
+  tags: sysstat
+
+- name: change sysstat to enabled
+  lineinfile: dest=/etc/default/sysstat regexp=^ENABLED line=ENABLED="true"
+  tags: sysstat
+
+- name: restart sysstat
+  service: name=sysstat state=running enabled=yes
+  tags: sysstat
+

@@ -1,0 +1,5 @@
+---
+
+- name: check blog contents out of github
+  git: repo=ssh://git@github.com/gwynp/sportdocs.git dest=/opt/www/www.sportdocs.org
+  tags: nginx

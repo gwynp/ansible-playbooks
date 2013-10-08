@@ -1,0 +1,16 @@
+---
+
+- name: add node.js repo
+  apt_repository: repo='ppa:chris-lea/node.js'
+
+- name: install requisite packages
+  apt: pkg=$item state=present
+  with_items: 
+     #- python-pycurl
+     - git-core
+     #- python-software-properties
+     - nodejs
+
+- name: install statsd from git
+  git: repo=https://github.com/etsy/statsd.git dest=/opt/statsd
+

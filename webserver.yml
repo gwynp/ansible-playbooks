@@ -4,7 +4,8 @@
   sudo: yes
   roles:
     - common
-    - nginx
+    #- nginx
+    #- statsd
 
 - hosts: web
   user: gwyn
