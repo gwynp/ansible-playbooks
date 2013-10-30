@@ -1,0 +1,8 @@
+---
+# file: pitchfx.yml
+- hosts: pitchfx
+  sudo: yes
+  roles:
+    - common
+    - mysql
+    - pitchfx
