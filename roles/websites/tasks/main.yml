@@ -1,0 +1,19 @@
+---
+- name: copy over domain template files
+  copy: src=$item dest=/etc/nginx/sites-available/$item owner=root group=root mode=644 backup=yes
+  with_items: $nginx_domains
+  tags: nginx
+
+- name: make links in sites-enabled
+  file: src=/etc/nginx/sites-available/$item dest=/etc/nginx/sites-enabled/$item owner=root group=root state=link
+  with_items: $nginx_domains
+  notify:
+    - restart nginx
+  tags: nginx
+
+- name: make sure the content directories exist
+  file: path=/opt/www/$item owner=gwyn group=gwyn mode=0755 state=directory
+  with_items: $nginx_domains
+  tags: nginx
+
+#- include: git.yml

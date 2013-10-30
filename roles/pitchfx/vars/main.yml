@@ -1,0 +1,4 @@
+mysql_root_password: passPASS!!
+pitchfx_code_dir: /opt/code/pitchfx
+pitchfx_data_dir: /opt/data/pitchfx
+pitchfx_db_name: pitchfx

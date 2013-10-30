@@ -1,5 +1,21 @@
 ---
+- name: create data directory
+  file: path={{ pitchfx_data_dir }} owner=gwyn group=gwyn mode=0644
 
-- name: check blog contents out of github
-  git: repo=ssh://git@github.com/gwynp/sportdocs.git dest=/opt/www/www.sportdocs.org
-  tags: nginx
+- name: create data directory
+  file: path={{ pitchfx_code_dir }} owner=gwyn group=gwyn mode=0644
+
+- name: check scripts out of github
+  git: repo=ssh://git@github.com/gwynp/pitchfx.git dest={{ pitchfx_code_dir }}
+
+- name: create the database
+  mysql_db: name={{ pitchfx_db_name }} state=present
+
+- name: create the schema
+  shell: mysql -h "localhost" -u"root" -p"{{ mysql_root_password }}" "{{ pitchfx_db_name }}" < "/opt/code/pitchfx/db_structure.sql"
+
+- name: run the scraper job from cron
+  cron: name="pitchfx mlb scraper script" hour="4" minute="00" job="{{ pitchfx_code_dir }}/mlbScraperDaily.sh"
+
+- name: run the db upload from cron
+  cron: name="pitchfx mlb scraper script" hour="4" minute="00" job="{{ pitchfx_code_dir }}/mlbScraperDaily.sh"
