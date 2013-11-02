@@ -15,7 +15,7 @@
   shell: mysql -h "localhost" -u"root" -p"{{ mysql_root_password }}" "{{ pitchfx_db_name }}" < "/opt/code/pitchfx/db_structure.sql"
 
 - name: run the scraper job from cron
-  cron: name="pitchfx mlb scraper script" hour="4" minute="00" job="{{ pitchfx_code_dir }}/mlbScraperDaily.sh"
+  cron: name="pitchfx mlb scraper script" user="gwyn" hour="4" minute="00" job="{{ pitchfx_code_dir }}/mlbScraperDaily.sh"
 
 - name: run the db upload from cron
-  cron: name="pitchfx mlb scraper script" hour="4" minute="00" job="{{ pitchfx_code_dir }}/mlbScraperDaily.sh"
+  cron: name="pitchfx mlb scraper script" user="gwyn" hour="4" minute="30" job="{{ pitchfx_code_dir }}/mlbScraperDaily.sh"

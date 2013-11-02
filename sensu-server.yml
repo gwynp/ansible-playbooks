@@ -1,0 +1,9 @@
+- hosts: gwyn03
+  sudo: True
+  roles:
+    - common
+    - nginx
+    - redis
+    - rabbitmq
+    - sensu-server
+    #- graphite

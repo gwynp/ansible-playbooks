@@ -1,0 +1,42 @@
+- name: Add the rabbitmq repository
+  action: lineinfile dest=/etc/apt/sources.list.d/rabbitmq.list regexp="rabbitmq.com" line='deb http://www.rabbitmq.com/debian/ testing main' create=yes
+  register: aptrepo
+
+- name: Apt key 
+  action: apt_key url=http://www.rabbitmq.com/rabbitmq-signing-key-public.asc state=present
+
+- name: apt cache
+  action: apt update_cache=yes
+  when: aptrepo.changed
+
+- name: Install rabbitmq
+  action: apt name=rabbitmq-server force=yes state=latest
+
+- name: ensure there is a  rabbitmq ssl directory
+  file: path=/etc/rabbitmq/ssl/ owner=rabbitmq group=rabbitmq mode=0750 state=directory
+
+- name: Copy over the ssl cert files
+  copy: src=$item dest=/etc/rabbitmq/ssl/ owner=rabbitmq group=rabbitmq mode=0640
+  with_items:
+    - cacert.pem
+    - server_key.pem
+    - server_cert.pem
+
+- name: Do the configuration stuff
+  action: template src=rabbit.mq.conf dest=/etc/rabbitmq/rabbitmq.config owner=rabbitmq group=rabbitmq mode=0644
+  notify: restart rabbitmq-server
+
+- name: start the services
+  action: service name=$item enabled=yes
+  with_items:
+    - redis-server
+    - rabbitmq-server
+
+- name: restart server
+  action: service name=rabbitmq-server state=restarted
+
+- name: Add rabbitmq sensu server
+  rabbitmq_vhost: name=/sensu state=present
+
+- name: Add rabbitmq sensu user
+  rabbitmq_user: user=sensu password={{ amqp_sensu_password }} vhost=/sensu configure_priv=.* read_priv=.* write_priv=.* state=present
