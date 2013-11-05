@@ -1,13 +1,13 @@
 ---
 # file: webservers.yml
-- hosts: web
+- hosts: gwyn02
   sudo: yes
   roles:
     - common
     #- nginx
     #- statsd
 
-- hosts: web
-  user: gwyn
-  roles:
-    - git
+#- hosts: web
+#  user: gwyn
+#  roles:
+#    - git

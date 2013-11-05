@@ -1,0 +1,5 @@
+- hosts: do
+  sudo: True
+  roles:
+    - sensu-client
+    - sensu-checks

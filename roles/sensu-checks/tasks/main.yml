@@ -1,0 +1,15 @@
+- name: install ruby-dev
+  apt: pkg=ruby-dev state=latest force=yes
+
+- name: install sensu-plugin gem
+  gem: name=sensu-plugin state=latest
+
+
+- name: install check_procs.rb plugins
+  copy: src=check_procs.rb dest=/etc/sensu/plugins/check-procs.rb mode=0755
+
+- name: install check_cron check plugins
+  copy: src=check_cron.json dest=/etc/sensu/conf.d/check_cron.json mode=0644
+
+- name: restart sensu client
+  service: name=sensu-client state=restarted
