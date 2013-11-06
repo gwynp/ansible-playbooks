@@ -1,6 +1,0 @@
-{
-  "graphite": {
-    "server":"{{ hostvars[groups['monitoring'][0]]['ansible_eth0']['ipv4']['address'] }}",
-    "port":"2003"
-  }
-}

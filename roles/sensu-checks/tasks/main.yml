@@ -4,12 +4,17 @@
 - name: install sensu-plugin gem
   gem: name=sensu-plugin state=latest
 
+- name: install check plugins
+  copy: src={{ item }} dest=/etc/sensu/plugins/{{ item }} mode=0755
+  with_items:
+    - check_procs.rb
+    - check_disk.rb
 
-- name: install check_procs.rb plugins
-  copy: src=check_procs.rb dest=/etc/sensu/plugins/check-procs.rb mode=0755
-
-- name: install check_cron check plugins
-  copy: src=check_cron.json dest=/etc/sensu/conf.d/check_cron.json mode=0644
+- name: install check json files
+  copy: src={{ item }} dest=/etc/sensu/conf.d/{{ item }} mode=0644
+  with_items:
+    - check_cron.json
+    - check_disk.json
 
 - name: restart sensu client
   service: name=sensu-client state=restarted
