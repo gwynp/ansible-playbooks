@@ -16,5 +16,5 @@
     - check_cron.json
     - check_disk.json
 
-- name: restart sensu client
-  service: name=sensu-client state=restarted
+- name: start sensu client
+  service: name=sensu-client state=started
