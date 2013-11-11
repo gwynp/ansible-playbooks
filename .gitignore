@@ -1,2 +1,3 @@
 group_vars/passwords.yml
 roles/splunk/files/splunk-6.0-182037-linux-2.6-intel.deb
+roles/splunk-forwarder/files/splunkforwarder-6.0-182037-linux-2.6-intel.deb
