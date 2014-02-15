@@ -1,13 +1,5 @@
 ---
-# file: webservers.yml
-- hosts: gwyn02
+- hosts: web
   sudo: yes
   roles:
-    - common
-    #- nginx
-    #- statsd
-
-#- hosts: web
-#  user: gwyn
-#  roles:
-#    - git
+     - owncloud

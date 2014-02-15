@@ -1,0 +1,33 @@
+
+
+ntp_servers: 
+  - 0.ubuntu.pool.ntp.org
+  - 1.ubuntu.pool.ntp.org
+
+ntp_server_backup: ubuntu.pool.ntp.org
+
+nginx_domains:
+  - db.sportdocs.org
+  - mail.sportdocs.org
+  - www.gwynprice.com
+  - www.sportdocs.org
+  - www.taooflinux.com
+
+nginx_user: www-data
+
+nginx_processes: 4
+
+nginx_directories: 
+  - /opt/www/sportdocs/octopress
+
+  nginx_domains:
+  - db.sportdocs.org
+  - mail.sportdocs.org
+  - www.gwynprice.com
+  - www.sportdocs.org
+  - www.taooflinux.com
+
+amqp_sensu_password: passPASS!!
+mysql_root_password: bruc1e
+sensu_dashboard_password: bruc1e
+

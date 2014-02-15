@@ -1,9 +1,12 @@
 ---
-- name: create data directory
-  file: path={{ pitchfx_data_dir }} owner=gwyn group=gwyn mode=0644
+- name: be sure git is installed
+  apt: pkg=git state=installed
 
 - name: create data directory
-  file: path={{ pitchfx_code_dir }} owner=gwyn group=gwyn mode=0644
+  file: path={{ pitchfx_data_dir }} owner=gwyn group=gwyn mode=0644 state=directory
+
+- name: create data directory
+  file: path={{ pitchfx_code_dir }} owner=gwyn group=gwyn mode=0644 state=directory
 
 - name: check scripts out of github
   git: repo=ssh://git@github.com/gwynp/pitchfx.git dest={{ pitchfx_code_dir }}

@@ -1,0 +1,38 @@
+---
+- name: Create database user 
+  mysql_user: login_user=root login_password={{ mysql_root_password }} name={{ db_user }} password={{db_pass }} priv=*.*:ALL state=present
+
+- name: Create database 
+  mysql_db: login_user=root login_password={{ mysql_root_password }} name={{ db_name }} state=present
+
+- name: pull in owncloud repo key
+  apt_key: url=http://download.opensuse.org/repositories/isv:ownCloud:community/Debian_7.0/Release.key state=present
+
+- name: Add the repo
+  apt_repository: repo='deb http://download.opensuse.org/repositories/isv:ownCloud:community/Debian_7.0/ /'
+
+- name: Install it
+  apt: pkg=owncloud update_cache=yes
+
+- name: Install PHP-APC pkg
+  apt: pkg=php-apc
+
+- name: move to our directory structure
+  command: mv /var/www/owncloud /opt/www/cloud.gwynprice.com creates=/opt/www/cloud.gwynprice.com
+
+- name: stick the data into our encrypted fs
+  command: mv /var/www/owncloud/data /decrypted/owncloud-data creates=/decrypted/owncloud-data
+
+- name: link to the new data directory
+  file: src=/decrypted/owncloud-data dest=/opt/www/cloud.gwynprice.com/data owner=www-data group=www-data state=link
+
+- name: copy over domain template files
+  copy: src=cloud.gwynprice.com dest=/etc/nginx/sites-available/cloud.gwynprice.com owner=root group=root mode=644 backup=yes
+
+- name: make links in sites-enabled
+  file: src=/etc/nginx/sites-available/cloud.gwynprice.com dest=/etc/nginx/sites-enabled/cloud.gwynprice.com owner=root group=root state=link
+  notify:
+    - restart nginx
+
+- name: Install ownCloud cronjob
+  cron: name="ownCloud" user="gwyn" minute="*/5" job="php -f /opt/www/cloud.gwynprice.com/cron.php > /dev/null"

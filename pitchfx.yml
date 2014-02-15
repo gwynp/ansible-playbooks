@@ -3,6 +3,6 @@
 - hosts: pitchfx
   sudo: yes
   roles:
-    - common
-    - mysql
+   # - common
+    #- mysql
     - pitchfx
