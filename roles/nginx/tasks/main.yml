@@ -15,7 +15,7 @@
   tags: nginx
 
 - name: be sure nginx is running and enabled
-  service: name=nginx state=running enabled=yes
+  service: name=nginx state=started enabled=yes
   tags: nginx
 
 #- include: git.yml

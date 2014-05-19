@@ -1,6 +1,5 @@
-nginx_domains:
-  - db.sportdocs.org
-  - mail.sportdocs.org
-  - www.gwynprice.com
-  - www.sportdocs.org
-  - www.taooflinux.com
+nginx_user: 
+  - www-data
+
+nginx_processes:
+  - 4
